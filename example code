@@ -1,0 +1,62 @@
+# <script src="https://gist.github.com/Dminor7/62975c3953c180f3fb15274ea19fa691.js"></script>
+
+"""
+# Worksheet header to data key mapping
+header_to_key = {
+    "Name":"name",
+    "Age":"age",
+    "Weight(Kg)":"weight_kg",
+}
+# List of objects to load into worksheet
+data = [
+    {
+        "name":"Foo",
+        "age":18
+        "weight_kg":50
+    },
+    {
+        "name":"Bar",
+        "age":19
+        "weight_kg":51
+    }
+]
+"""
+from typing import Any, Optional, Union, List
+
+import gspread as gs
+
+# Writes header to 1st row in the worksheet.
+def write_headers(worksheet: gs.Worksheet) -> List:
+        headers = list(header_to_key.keys())
+        worksheet.insert_row(headers)
+        return worksheet.row_values(1)
+
+# Check for headers 
+def check_headers(worksheet: gs.Worksheet) -> Union[Any, List]:
+    try:
+        headers = worksheet.row_values(1)
+    except IndexError:
+        return []
+    else:
+        return headers
+
+# Write data into worksheet
+def write_to_worksheet(
+        sheet: gs.Spreadsheet, worksheet: gs.Worksheet, data: List
+    ) -> Any:
+    try:
+        headers = worksheet.row_values(1)
+    except IndexError:
+        headers = write_headers(worksheet=worksheet)
+    put_values = []
+    for v in data:
+        temp = []
+        for h in headers:
+            temp.append(v.get(header_to_key[h]))
+        put_values.append(temp)
+
+    return sheet.values_append(
+        worksheet.title,
+        {"valueInputOption": "USER_ENTERED"},
+        {"values": put_values},
+    )
