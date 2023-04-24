@@ -1,3 +1,7 @@
 
-
-
+# [ ] create format for Google Sheet
+# [ ] find example code and test it
+# [ ] modify code to work in own sheet
+# [ ] once prior steps are complete, start writing in the shipment patterns to Sheet
+# [ ] read the patterns into program, spit make patterns into their primary direction
+# [ ] refine process
