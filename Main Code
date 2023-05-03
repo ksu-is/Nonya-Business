@@ -3,7 +3,7 @@ import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 from collections import counter
 
-scope = [
+Scopes = [
     'https://www.googleapis.com/auth/spreadsheets',
     'https://www.googleapis.com/auth/drive'
     ]
@@ -21,6 +21,7 @@ states=(0,0,0,0,0,0,0)
 primaryStates =()
 countee = ""
 time=0
+done=""
 companyID=1000
 company = "name"
 
@@ -221,8 +222,11 @@ while True:
     strpDrRcmmnd.update_acell('E3',primaryStates[0])
     strpDrRcmmnd.update_acell('E4',primaryStates[1])
     strpDrRcmmnd.update_acell('E5',primaryStates[2])
-    break
 
+    #if done, break
+    done = input("If you would like to exit the program please enter the word 'done'.")
+    if done.lower()== 'done':
+        break
 
         
         #print(cell.value)
