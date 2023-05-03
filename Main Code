@@ -1,3 +1,231 @@
-# set up variables
+# import needed modules
+import gspread
+from oauth2client.service_account import ServiceAccountCredentials
+from collections import counter
+
+scope = [
+    'https://www.googleapis.com/auth/spreadsheets',
+    'https://www.googleapis.com/auth/drive'
+    ]
+
+#define Variables
+creds = ServiceAccountsCredentials.from_json_keyfile_name("C:\\Users\\indyj\\AppData\\Roaming\\gspread\\service_account.json", scopes = scopes)
+gc = gspread.service_account()
+files = gspread.authrize(creds)
+workbook = file.open("IS 3020 Project Sheet")
+strpDrRcmmnd = workbook.sheet1
+dataHistory = workbook.sheet4
+numb=2
+countC=('C', numb)
+states=(0,0,0,0,0,0,0)
+primaryStates =()
+countee = ""
+time=0
+companyID=1000
+company = "name"
+
+
+# define state values then find company name and fill in slot on the workbook.
+while True:
+    TX=0
+    AL=0
+    GA=0
+    TN=0
+    SC=0
+    MS=0
+    FL=0
+    numb+=1
+    
+    companyID = input("What is the company's Number ID?")
+    if companyID == 1029:
+        company = 'ABC Industry'
+    elif companyID == 1033:
+        company = 'QRF Corp.'
+    elif companyID == 1038:
+        company = 'EFG Inc.'
+    elif companyID == 1042:
+        company = 'XYZ Enterprise'
+    elif companyID.isnumber() == flase:
+        company = input("Unknown entry, please restart the program or enter company name here.")
+    for c in countC:
+        countee+= c
+    strpDrRcmmnd.update_acell(countee,company)
+
+    #ADDITIONAL STEP(Optional):ask for time and use it to find frieght history reference      
+    #time = input("Please enter the time of arrival as this format: 00:00:00")
+
+    #Find all historical records of company and find most common states
+    #if ABC Industry
+    if companyID == 1029:
+        for cell in dataHistory('E3:Z3'):
+            if cell == "TX":
+                TX+=1
+            elif cell == "AL":
+                AL+=1
+            elif cell == "GA":
+                GA+=1
+            elif cell == "TN":
+                TN+=1
+            elif cell == "SC":
+                SC+=1
+            elif cell == "MS":
+                MS+=1
+            elif cell == "FL":
+                FL+=1
+        for cell in dataHistory('E9:Z9'):
+            if cell == "TX":
+                TX+=1
+            elif cell == "AL":
+                AL+=1
+            elif cell == "GA":
+                GA+=1
+            elif cell == "TN":
+                TN+=1
+            elif cell == "SC":
+                SC+=1
+            elif cell == "MS":
+                MS+=1
+            elif cell == "FL":
+                FL+=1
+    #if QRF Corp
+    elif companyID == 1033:
+        for cell in dataHistory('E4:Z4'):
+            if cell == "TX":
+                TX+=1
+            elif cell == "AL":
+                AL+=1
+            elif cell == "GA":
+                GA+=1
+            elif cell == "TN":
+                TN+=1
+            elif cell == "SC":
+                SC+=1
+            elif cell == "MS":
+                MS+=1
+            elif cell == "FL":
+                FL+=1
+        for cell in dataHistory('E10:Z10'):
+            if cell == "TX":
+                TX+=1
+            elif cell == "AL":
+                AL+=1
+            elif cell == "GA":
+                GA+=1
+            elif cell == "TN":
+                TN+=1
+            elif cell == "SC":
+                SC+=1
+            elif cell == "MS":
+                MS+=1
+            elif cell == "FL":
+                FL+=1
+    #if EFG
+    elif companyID == 1038:
+        for cell in dataHistory('E5:Z5'):
+            if cell == "TX":
+                TX+=1
+            elif cell == "AL":
+                AL+=1
+            elif cell == "GA":
+                GA+=1
+            elif cell == "TN":
+                TN+=1
+            elif cell == "SC":
+                SC+=1
+            elif cell == "MS":
+                MS+=1
+            elif cell == "FL":
+                FL+=1
+        for cell in dataHistory('E7:Z7'):
+            if cell == "TX":
+                TX+=1
+            elif cell == "AL":
+                AL+=1
+            elif cell == "GA":
+                GA+=1
+            elif cell == "TN":
+                TN+=1
+            elif cell == "SC":
+                SC+=1
+            elif cell == "MS":
+                MS+=1
+            elif cell == "FL":
+                FL+=1
+        #IF XYZ
+    elif companyID == 1038:
+        for cell in dataHistory('E2:Z2'):
+            if cell == "TX":
+                TX+=1
+            elif cell == "AL":
+                AL+=1
+            elif cell == "GA":
+                GA+=1
+            elif cell == "TN":
+                TN+=1
+            elif cell == "SC":
+                SC+=1
+            elif cell == "MS":
+                MS+=1
+            elif cell == "FL":
+                FL+=1
+        for cell in dataHistory('E6:Z6'):
+            if cell == "TX":
+                TX+=1
+            elif cell == "AL":
+                AL+=1
+            elif cell == "GA":
+                GA+=1
+            elif cell == "TN":
+                TN+=1
+            elif cell == "SC":
+                SC+=1
+            elif cell == "MS":
+                MS+=1
+            elif cell == "FL":
+                FL+=1
+        for cell in dataHistory('E11:Z11'):
+            if cell == "TX":
+                TX+=1
+            elif cell == "AL":
+                AL+=1
+            elif cell == "GA":
+                GA+=1
+            elif cell == "TN":
+                TN+=1
+            elif cell == "SC":
+                SC+=1
+            elif cell == "MS":
+                MS+=1
+            elif cell == "FL":
+                FL+=1
+                
+    #calculate destinations and fill workbook state locations
+    states[AL,TX,GA,SC,MS,FL,TN]
+    primaryStatesNum = states.most_common(3)
+    
+    if AL in primaryStatesNum:
+        primaryStates.append('AL')
+    elif TX in primaryStatesNum:
+        primaryStates.append('TX')
+    elif TN in primaryStatesNum:
+        primaryStates.append('TN')
+    elif SC in primaryStatesNum:
+        primaryStates.append('SC')
+    elif MS in primaryStatesNum:
+        primaryStates.append('MS')
+    elif GA in primaryStatesNum:
+        primaryStates.append('GA')
+    elif FL in primaryStatesNum:
+        primaryStates.append('FL')
+    
+    strpDrRcmmnd.update_acell('E3',primaryStates[0])
+    strpDrRcmmnd.update_acell('E4',primaryStates[1])
+    strpDrRcmmnd.update_acell('E5',primaryStates[2])
+    break
+
+
+        
+        #print(cell.value)
+    
 
 
